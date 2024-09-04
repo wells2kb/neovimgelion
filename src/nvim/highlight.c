@@ -950,6 +950,10 @@ void hlattrs2dict(Dictionary *hl, Dictionary *hl_attrs, HlAttrs ae, bool use_rgb
     PUT_C(*hl_attrs, "altfont", BOOLEAN_OBJ(true));
   }
 
+  if (mask & HL_ROUND) {
+    PUT_C(*hl_attrs, "round", BOOLEAN_OBJ(true));
+  }
+
   if (mask & HL_NOCOMBINE) {
     PUT_C(*hl_attrs, "nocombine", BOOLEAN_OBJ(true));
   }
@@ -1024,6 +1028,7 @@ HlAttrs dict2hlattrs(Dict(highlight) *dict, bool use_rgb, int *link_id, Error *e
   CHECK_FLAG(dict, mask, standout, , HL_STANDOUT);
   CHECK_FLAG(dict, mask, strikethrough, , HL_STRIKETHROUGH);
   CHECK_FLAG(dict, mask, altfont, , HL_ALTFONT);
+  CHECK_FLAG(dict, mask, round, , HL_ROUND);
   if (use_rgb) {
     CHECK_FLAG(dict, mask, fg_indexed, , HL_FG_INDEXED);
     CHECK_FLAG(dict, mask, bg_indexed, , HL_BG_INDEXED);
@@ -1101,6 +1106,7 @@ HlAttrs dict2hlattrs(Dict(highlight) *dict, bool use_rgb, int *link_id, Error *e
     CHECK_FLAG(cterm, cterm_mask, standout, , HL_STANDOUT);
     CHECK_FLAG(cterm, cterm_mask, strikethrough, , HL_STRIKETHROUGH);
     CHECK_FLAG(cterm, cterm_mask, altfont, , HL_ALTFONT);
+    CHECK_FLAG(cterm, cterm_mask, round, , HL_ROUND);
     CHECK_FLAG(cterm, cterm_mask, nocombine, , HL_NOCOMBINE);
   } else if (dict->cterm.type == kObjectTypeArray && dict->cterm.data.array.size == 0) {
     // empty list from Lua API should clear all cterm attributes

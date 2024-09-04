@@ -137,6 +137,7 @@ struct TUIData {
     int save_title, restore_title;
     int set_underline_style;
     int set_underline_color;
+    int set_round_bg_style;
     int sync;
   } unibi_ext;
   char *space_buf;
@@ -268,6 +269,7 @@ void tui_enable_extended_underline(TUIData *tui)
   if (tui->unibi_ext.set_underline_style == -1) {
     tui->unibi_ext.set_underline_style = (int)unibi_add_ext_str(tui->ut, "ext.set_underline_style",
                                                                 "\x1b[4:%p1%dm");
+    tui->unibi_ext.set_round_bg_style = (int)unibi_add_ext_str(tui->ut, "ext.set_round_bg_style", "\x1b[108:%p1%dm");
   }
   // Only support colon syntax. #9270
   tui->unibi_ext.set_underline_color = (int)unibi_add_ext_str(tui->ut, "ext.set_underline_color",
@@ -674,6 +676,8 @@ static void update_attrs(TUIData *tui, int attr_id)
   bool strikethrough = attr & HL_STRIKETHROUGH;
   bool altfont = attr & HL_ALTFONT;
 
+  bool round_bg = attr & HL_ROUND;
+
   bool underline;
   bool undercurl;
   bool underdouble;
@@ -763,6 +767,11 @@ static void update_attrs(TUIData *tui, int attr_id)
       UNIBI_SET_NUM_VAR(tui->params[2], color & 0xff);          // blue
       unibi_out_ext(tui, tui->unibi_ext.set_underline_color);
     }
+  }
+
+  if (round_bg && tui->unibi_ext.set_round_bg_style != -1) {
+    UNIBI_SET_NUM_VAR(tui->params[0], 15);
+    unibi_out_ext(tui, tui->unibi_ext.set_round_bg_style);
   }
 
   int fg, bg;

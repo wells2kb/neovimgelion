@@ -169,6 +169,7 @@ typedef struct {
   Boolean italic;
   Boolean reverse;
   Boolean altfont;
+  Boolean round;
   Boolean nocombine;
   Boolean default_ DictKey(default);
   Object cterm;
@@ -202,6 +203,7 @@ typedef struct {
   Boolean italic;
   Boolean reverse;
   Boolean altfont;
+  Boolean round;
   Boolean nocombine;
 } Dict(highlight_cterm);
 
