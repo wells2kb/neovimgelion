@@ -269,7 +269,7 @@ void tui_enable_extended_underline(TUIData *tui)
   if (tui->unibi_ext.set_underline_style == -1) {
     tui->unibi_ext.set_underline_style = (int)unibi_add_ext_str(tui->ut, "ext.set_underline_style",
                                                                 "\x1b[4:%p1%dm");
-    tui->unibi_ext.set_round_bg_style = (int)unibi_add_ext_str(tui->ut, "ext.set_round_bg_style", "\x1b[108:%p1%dm");
+    tui->unibi_ext.set_round_bg_style = (int)unibi_add_ext_str(tui->ut, "ext.set_round_bg_style", "\x1b[108:1:%p1%dm");
   }
   // Only support colon syntax. #9270
   tui->unibi_ext.set_underline_color = (int)unibi_add_ext_str(tui->ut, "ext.set_underline_color",
